@@ -1,0 +1,22 @@
+:host {
+    padding: 0.4rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .button-contaienr {
+        user-select: none;
+    }
+
+    .options-container {
+
+        .item-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+    }
+}
