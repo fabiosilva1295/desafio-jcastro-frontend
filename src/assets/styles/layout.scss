@@ -5,11 +5,14 @@
 
     main {
         display: flex;
-        flex: 1 1 auto;
+        height: calc(100% - 60.79px);
     }
 
-    main.side-menu {
-
+    .main-content {
+        background: var(--p-surface-50);
+        border-radius: 25px 0 0 0;
+        flex: 1 1 auto;
+        
     }
 
 }

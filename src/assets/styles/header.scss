@@ -6,6 +6,7 @@
 
     .button-contaienr {
         user-select: none;
+        color: var(--p-text-color);
     }
 
     .options-container {
@@ -19,4 +20,6 @@
             border-radius: 50%;
         }
     }
+
+    
 }

@@ -1,0 +1,29 @@
+:host {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    .searchbar-container {
+        width: 100%;
+        max-width: 700px;
+        padding: 0.4rem 1rem;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        border: thin solid var(--p-surface-100);
+        
+
+        input {
+            width: 100%;
+            background: transparent;
+            outline: none;
+            border: none;
+            color: var(--p-text-color);
+            font-weight: 300;
+        }
+
+        i {
+            color: var(--p-text-color);
+        }
+    }
+}
