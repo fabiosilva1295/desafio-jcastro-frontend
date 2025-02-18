@@ -18,9 +18,7 @@ export class SearchBarComponent implements OnInit {
 
   constructor(
     private contactsService: ContactsService
-  ){
-
-    
+  ){    
     effect(()=> {
       this.contacts = this.contactsService.dataState()
     });
@@ -32,7 +30,6 @@ export class SearchBarComponent implements OnInit {
   public onSearch(): void {
     this.searching = true;
 
-    
   }
 
 

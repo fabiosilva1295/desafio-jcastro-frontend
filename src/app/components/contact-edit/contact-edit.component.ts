@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, effect, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgxMaskDirective } from 'ngx-mask';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -15,7 +16,7 @@ import { ContactsService } from '../../services/contacts.service';
 
 @Component({
   selector: 'app-contact-edit',
-  imports: [ButtonModule, CommonModule, ToastModule, ConfirmDialogModule, ReactiveFormsModule, InputTextModule, SelectButtonModule],
+  imports: [ButtonModule, CommonModule, ToastModule, ConfirmDialogModule, ReactiveFormsModule, InputTextModule, NgxMaskDirective, SelectButtonModule],
   templateUrl: './contact-edit.component.html',
   styleUrl: './contact-edit.component.scss'
 })
@@ -93,7 +94,7 @@ export class ContactEditComponent implements OnInit{
     }
 
     delete this.contactsService.contactState()._id;
-    this.contactsService.create(this.contactForm.value).subscribe({
+    this.contactsService.create(this.contactsService.contactState()).subscribe({
       next: res => {
         this.router.navigate([`/contatos`])
       }

@@ -33,7 +33,7 @@
 
       <div class="flex items-center gap-2">
         <span class="font-regular  text-md text-cyan-900">Celular</span>
-        <input placeholder="Celular do contato" formControlName="celular" pInputText type="text">
+        <input mask="(00) 00000-0000" placeholder="Celular do contato" formControlName="celular" pInputText type="text">
         <!-- <div *ngIf=" contactForm.get('celular')?.hasError('phoneExists')">
       Este número já está cadastrado.
     </div> -->
@@ -41,7 +41,7 @@
 
       <div class="flex items-center gap-2">
         <span class="font-regular  text-md text-cyan-900">Telefone</span>
-        <input placeholder="Telefone do contato" formControlName="telefone" pInputText type="text">
+        <input mask="(00) 0000-0000" placeholder="Telefone do contato" formControlName="telefone" pInputText type="text">
       </div>
 
       <div class="flex items-center gap-2">
