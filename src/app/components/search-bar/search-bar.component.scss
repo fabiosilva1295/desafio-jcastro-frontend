@@ -11,6 +11,7 @@
         display: flex;
         align-items: center;
         border: thin solid var(--p-surface-100);
+        position: relative;
         
 
         input {
@@ -26,4 +27,6 @@
             color: var(--p-text-color);
         }
     }
+
+    
 }

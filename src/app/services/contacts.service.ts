@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
 import { Contact } from '../models/contacts.model';
 
@@ -18,6 +18,8 @@ export class ContactsService {
     ativo: false,
   }
 
+
+  public dataState = signal<Contact[]>([]);
   public contactState = signal<Contact>(this._defaultContact)
 
   private apiUrl = `${environment.apiUrl}/contacts`;
@@ -54,5 +56,15 @@ export class ContactsService {
   
   getRecentContacts(): Observable<Contact[]> {
     return this.http.get<Contact[]>(`${this.apiUrl}/recent`);
+  }
+
+  setDefaultContact() {
+    this.contactState.update(() => this._defaultContact)
+  }
+
+  checkPhoneExists(phone: string): Observable<boolean> {
+    return this.http.get<{ exists: boolean }>(`${this.apiUrl}/exists/${phone}`).pipe(
+      map(response => response.exists)
+    );
   }
 }

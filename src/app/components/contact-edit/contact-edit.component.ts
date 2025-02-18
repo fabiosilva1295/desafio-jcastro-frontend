@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectButtonModule } from 'primeng/selectbutton';
-import { Subscription } from 'rxjs';
+import { map, Observable, Subscription } from 'rxjs';
 import { Contact } from '../../models/contacts.model';
 import { AvatarService } from '../../services/avatar.service';
 import { ContactsService } from '../../services/contacts.service';
@@ -31,7 +31,8 @@ export class ContactEditComponent implements OnInit{
     private fb: FormBuilder,
     private activatedRouter: ActivatedRoute,
     private contactsService: ContactsService,
-    public avatarService: AvatarService
+    public avatarService: AvatarService,
+    private router: Router
   ) {
     
   }
@@ -45,10 +46,10 @@ export class ContactEditComponent implements OnInit{
     this.contactForm = this.fb.group({
       nome: [ '', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      celular: [ '', Validators.required],
+      celular: [ '', Validators.required, [this.phoneValidator.bind(this)]],
       telefone: [ '', Validators.required],
       ativo: [true],
-      favorito: [false],
+      favorito: [this.contactsService.contactState() || false],
     });
 
     this.contactForm.valueChanges.subscribe(() => this.contactsService.contactState.update((state) => ( {...state, ...this.contactForm.value} )) );
@@ -58,6 +59,7 @@ export class ContactEditComponent implements OnInit{
   public getContactById(id: string): void  {
     this.contactsService.getContactById(id).subscribe({
       next: (data) => {
+        this.contactsService.contactState.update(() => ({...data}));
         this.contact = data;
         this.contactForm.patchValue(data);
       },
@@ -68,12 +70,33 @@ export class ContactEditComponent implements OnInit{
   }
 
   public onCreateContact() {
-    this.contactsService.create(this.contactForm.value).subscribe({
-      next: (res ) => {
-        console.log(res)
-      }
-    })
+    const phone = this.contactForm.value.celular;
+  
+    this.contactsService.checkPhoneExists(phone).subscribe({
+      next: (exists) => {
+        if (exists) {
+          alert('Este número já está cadastrado.');
+        } else {
+          this.contactsService.create(this.contactForm.value).subscribe({
+            next: () => {
+              alert('Contato criado com sucesso!');
+              this.router.navigate(['/contatos']);
+            },
+            error: () => alert('Erro ao criar contato. Tente novamente.')
+          });
+        }
+      },
+      error: () => alert('Erro ao verificar número. Tente novamente.')
+    });
   }
+
+  phoneValidator(control: AbstractControl): Observable<ValidationErrors | null> {
+    return this.contactsService.checkPhoneExists(control.value).pipe(
+      map(exists => (exists ? { phoneExists: true } : null))
+    );
+  }
+  
+  
 
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();

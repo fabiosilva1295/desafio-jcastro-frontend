@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
 import { ContactProfileComponent } from './pages/contact-profile/contact-profile.component';
+import { CreateContactComponent } from './pages/create-contact/create-contact.component';
 import { HomeComponent } from './pages/home/home.component';
 
 export const routes: Routes = [
@@ -22,8 +23,8 @@ export const routes: Routes = [
                 component: ContactProfileComponent
             },
             {
-                path: 'contato/new/:mode',
-                component: ContactProfileComponent
+                path: 'contatos/new',
+                component: CreateContactComponent
             },
         ]
     }

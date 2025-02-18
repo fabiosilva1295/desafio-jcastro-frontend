@@ -4,7 +4,6 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
-import { Subscription } from 'rxjs';
 import { ContactEditComponent } from '../../components/contact-edit/contact-edit.component';
 import { ContactViewComponent } from '../../components/contact-view/contact-view.component';
 import { Contact } from '../../models/contacts.model';
@@ -18,10 +17,7 @@ import { ContactsService } from '../../services/contacts.service';
 })
 export class ContactProfileComponent implements OnInit {
 
-  private subscription!: Subscription
-
   public isEditing: boolean = false;
-  public isCreate: string | null = null;
 
   constructor(
     private rotuer: Router,
@@ -34,10 +30,6 @@ export class ContactProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.subscription = this.activatedRouter.paramMap.subscribe(params => {
-      this.isCreate= params.get('mode');
-      this.isCreate ? this.isEditing = true : false
-    });
   }
 
   public onNavigationBack(): void  {
@@ -70,32 +62,19 @@ export class ContactProfileComponent implements OnInit {
   public markAsFavorite(): void {
 
     this.contactsService.contactState.update((state) => ({...state, favorito: !state.favorito}));
-    console.log(this.contactsService.contactState())
-    if(!this.isEditing && !this.isCreate) this.contactsService.markFavorite(this.contactsService.contactState()._id as string, this.contactsService.contactState().favorito as boolean).subscribe({
+    if(!this.isEditing) this.contactsService.markFavorite(this.contactsService.contactState()._id as string, this.contactsService.contactState().favorito as boolean).subscribe({
       next: () => {
         this.messageService.add({  severity: 'success', summary: 'Sucesso', detail: `${this.contactsService.contactState().nome} agora ${this.contactsService.contactState().favorito ? 'é um': 'não é mais um'} favorito` });
       }
     })
   }
 
-  public onSaving():  void {
-
-    if(this.isCreate) {
-      delete this.contactsService.contactState()._id;
-      this.contactsService.create(this.contactsService.contactState()).subscribe({
-        next: (contact: Contact) => {
-          this.contactsService.contactState.update(() => contact);
-          this.rotuer.navigate([`/contato/${contact._id}`])
-        }
-      })
-    }
-
+  public onUpdate():  void { 
+    
     if(!this.isEditing) {
       this.isEditing = true;
       return
     }
-    
-    
 
     this.contactsService.update(this.contactsService.contactState()._id as string, this.contactsService.contactState()).subscribe({
       next: (contact: Contact) => {

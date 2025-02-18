@@ -1,0 +1,22 @@
+<div class="size-full container-main rounded-xl p-5 flex flex-col">
+
+    <div class="w-full flex justify-between items-center">
+        <button (click)="onNavigationBack()"
+            class="p-4 text-cyan-800 back-button flex items-center gap-2 cursor-pointer">
+            <i class="pi pi-arrow-left"></i>
+            <span class="font-semibold">Contatos</span>
+        </button>
+
+        <div class="flex items-center gap-2">
+            <p-button (onClick)="markAsFavorite()" [outlined]="!contactsService.contactState().favorito"
+                [label]="contactsService.contactState().favorito ? 'Favorito': ''" [rounded]="true" severity="warn"
+                icon="pi pi-star"></p-button>
+            <p-button (onClick)="onCreate()" [rounded]="true" severity="info" [label]="'Criar' "></p-button>
+        </div>
+    </div>
+    <app-contact-edit></app-contact-edit>
+</div>
+
+
+<p-toast position="bottom-center" />
+<p-confirmdialog />

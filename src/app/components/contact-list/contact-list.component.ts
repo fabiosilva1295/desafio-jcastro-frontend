@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, effect, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TableModule } from 'primeng/table';
 import { Subscription } from 'rxjs';
@@ -23,7 +23,9 @@ export class ContactListComponent implements OnInit{
     private router: Router,
     private contactsService: ContactsService
   ){
-
+    effect(()=> {
+      this.contacts = this.contactsService.dataState()
+    })
     
 
   }
@@ -31,13 +33,14 @@ export class ContactListComponent implements OnInit{
   ngOnInit(): void {
     this.subscription = this.contactsService.getAllContacts().subscribe({
       next: (data) => {
-        this.contacts = data
+        this.contactsService.dataState.update(() => data);
       }
-    })
+    }); 
+
+    
   }
 
   onRowSelect(contact: Contact) {
-    console.log(contact)
     this.contactsService.contactState.update(() => contact);
     this.router.navigate([`/contato/${contact._id}`]);
     

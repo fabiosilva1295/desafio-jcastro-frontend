@@ -61,6 +61,9 @@
     <div class="flex items-center gap-2">
       <span class="font-regular  text-md text-cyan-900">Celular</span>
       <input  placeholder="Celular do contato" formControlName="celular" pInputText type="text">
+      <div *ngIf="contactForm.get('celular')?.hasError('phoneExists')">
+        Este número já está cadastrado.
+      </div>
     </div>
 
     <div class="flex items-center gap-2">
