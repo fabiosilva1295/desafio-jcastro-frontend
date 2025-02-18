@@ -1,55 +1,7 @@
-<!-- <div class="size-full container-main rounded-xl p-2">
-    <div class="grid grid-flow-row grid-cols-5 p-2">
-      <div class="col-span-1 flex gap-2 tems-center">
-        <p-button (onClick)="onNavigationBack()" icon="pi pi-arrow-left" severity="secondary" text label="Voltar"></p-button>
-      </div>
-      <div class="col-span-4 flex items-center gap-2 justify-end">
-        <p-button severity="warn" [outlined]="true" [rounded]="true" icon="pi pi-star"></p-button>
-        <p-button (onClick)="isEditing = !isEditing" severity="info" [rounded]="true" [label]="isEditing ? 'Salvar': ''" [icon]=" isEditing ? '' : 'pi pi-user-edit'"></p-button>
-        
-        @if (!isEditing) {
-          <p-button severity="danger" [rounded]="true" icon="pi pi-trash"></p-button>
-        } 
-      </div>
-    </div>
-
-    @if (!isEditing) {
-      <app-contact-view></app-contact-view>
-    } @else {
-      <app-contact-edit></app-contact-edit>
-    }
-
-</div> -->
 
 <div class="size-full container-main rounded-xl p-5 flex flex-col">
 
-  <div class="w-full flex justify-between items-center">
-    <button  (click)="onNavigationBack()" class="p-4 text-cyan-800 back-button flex items-center gap-2 cursor-pointer">
-      <i class="pi pi-arrow-left"></i>
-      <span class="font-semibold">{{ isEditing ? 'Cancelar' : 'Contatos'}}</span>
-    </button>
-
-    <div class="flex items-center gap-2">
-      <p-button (onClick)="markAsFavorite()" [outlined]="!contactsService.contactState().favorito" [label]="contactsService.contactState().favorito ? 'Favorito': ''" [rounded]="true" severity="warn" icon="pi pi-star"></p-button>
-      <p-button (onClick)="onUpdate()" [rounded]="true" severity="info" [label]="isEditing ? 'Salvar' : 'Editar'"></p-button>
-
-      @if (!isEditing) {
-        <p-button (onClick)="onDelete($event)" [outlined]="true" [rounded]="true" severity="danger" icon="pi pi-trash"></p-button>
-      }
-    </div>
-  </div>
-
-  
-
-  <div class="size-full  flex gap-9 justify-center items-center">
-    @if (!isEditing) {
-      <app-contact-view></app-contact-view>
-    } @else {
-      <app-contact-edit></app-contact-edit>
-    }
-  </div>
+  <app-contact-view></app-contact-view>
   
 </div>
 
-<p-toast  position="bottom-center"/>
-<p-confirmdialog />

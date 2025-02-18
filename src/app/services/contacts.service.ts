@@ -16,6 +16,9 @@ export class ContactsService {
     telefone: '',
     favorito: false,
     ativo: false,
+    createdAt: new Date(),
+    last_updated: new Date()
+
   }
 
 
@@ -59,7 +62,7 @@ export class ContactsService {
   }
 
   setDefaultContact() {
-    this.contactState.update(() => this._defaultContact)
+    this.contactState.set(this._defaultContact)
   }
 
   checkPhoneExists(phone: string): Observable<boolean> {

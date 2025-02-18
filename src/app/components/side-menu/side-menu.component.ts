@@ -14,7 +14,6 @@ export class SideMenuComponent {
 
   public items: MenuItem[] = [
       {label: 'Contatos', icon: 'pi pi-user', routerLink: '/contatos'},
-      {label: 'Recentes', icon: 'pi pi-clock', routerLink: '/recentes'},
       {label: 'Favoritos', icon: 'pi pi-star', routerLink: '/favoritos'}
     ];
 

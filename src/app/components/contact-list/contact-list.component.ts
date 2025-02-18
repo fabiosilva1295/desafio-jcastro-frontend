@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, OnInit } from '@angular/core';
+import { Component, effect, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TableModule } from 'primeng/table';
 import { Subscription } from 'rxjs';
@@ -13,6 +13,8 @@ import { ContactsService } from '../../services/contacts.service';
   styleUrl: './contact-list.component.scss'
 })
 export class ContactListComponent implements OnInit{
+
+  @Input('mode') mode: 'all' | 'favorites' = 'all'
 
   private subscription!: Subscription;
 
@@ -31,13 +33,13 @@ export class ContactListComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    
     this.subscription = this.contactsService.getAllContacts().subscribe({
       next: (data) => {
-        this.contactsService.dataState.update(() => data);
+        if(this.mode == 'all') this.contactsService.dataState.update(() => data);
+        if(this.mode == 'favorites') this.contactsService.dataState.update(() => data.filter((contact: Contact) => contact.favorito))
       }
-    }); 
-
-    
+    });
   }
 
   onRowSelect(contact: Contact) {
