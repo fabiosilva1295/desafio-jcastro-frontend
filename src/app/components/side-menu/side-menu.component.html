@@ -1,0 +1,12 @@
+<div class="main-container">
+    <p-button routerLink="contato/new/create" rounded styleClass="w-full" icon="pi pi-plus" label="Criar contato"></p-button>
+
+    <ul class="items-container flex flex-col mt-4 gap-2">
+      @for (item of items; track $index) {
+        <li routerLinkActive="active" [routerLink]="item.routerLink" class="item-container"> 
+          <i [ngClass]="item.icon"></i>
+          <span>{{item.label}}</span>
+        </li>
+      }
+    </ul>
+</div>

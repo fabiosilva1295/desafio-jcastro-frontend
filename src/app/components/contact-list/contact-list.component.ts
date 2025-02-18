@@ -1,82 +1,49 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { TableModule } from 'primeng/table';
+import { Subscription } from 'rxjs';
 import { Contact } from '../../models/contacts.model';
+import { ContactsService } from '../../services/contacts.service';
 
 @Component({
   selector: 'app-contact-list',
   imports: [CommonModule, TableModule],
-  styleUrl: '../../../assets/styles/contact-list.scss',
-  template: `
-
-  <div class=" flex rounded-xl overflow-hidden size-full">
-    <p-table class="size-full" selectionMode="multiple" [scrollable]="true" scrollHeight="flex" [value]="contacts" [tableStyle]="{ 'min-width': '100%' }">
-        <ng-template #header>
-            <tr>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Celular</th>
-                <th>Telefone</th>
-            </tr>
-        </ng-template>
-        <ng-template #body let-contact>
-            <tr>
-                <td>{{ contact.nome }}</td>
-                <td>{{ contact.email }}</td>
-                <td>{{ contact.celular }}</td>
-                <td>{{ contact.telefone }}</td>
-            </tr>
-        </ng-template>
-    </p-table>
-  </div>
-
-    
-
-  `,
+  templateUrl: './contact-list.component.html',
+  styleUrl: './contact-list.component.scss'
 })
 export class ContactListComponent implements OnInit{
 
-  public contacts: Contact[] = []
+  private subscription!: Subscription;
 
-  constructor(){
+  public contacts: Contact[] = [];
+  public selectedContact!: Contact;
 
-    this.contacts = [
-      { nome: 'Fabio Francisco', email: 'Fabio@Email.com', celular: '8199999999', ativo: true, favorito: false},
-      { nome: 'Maria da silva', email: 'maria@email.com', celular: '8199988889', ativo: true, favorito: true},
-      { nome: 'Fabio Francisco', email: 'Fabio@Email.com', celular: '8199999999', ativo: true, favorito: false},
-      { nome: 'Maria da silva', email: 'maria@email.com', celular: '8199988889', ativo: true, favorito: true},
-      { nome: 'Fabio Francisco', email: 'Fabio@Email.com', celular: '8199999999', ativo: true, favorito: false},
-      { nome: 'Maria da silva', email: 'maria@email.com', celular: '8199988889', ativo: true, favorito: true},
-      { nome: 'Fabio Francisco', email: 'Fabio@Email.com', celular: '8199999999', ativo: true, favorito: false},
-      { nome: 'Maria da silva', email: 'maria@email.com', celular: '8199988889', ativo: true, favorito: true},
-      { nome: 'Fabio Francisco', email: 'Fabio@Email.com', celular: '8199999999', ativo: true, favorito: false},
-      { nome: 'Maria da silva', email: 'maria@email.com', celular: '8199988889', ativo: true, favorito: true},
-      { nome: 'Fabio Francisco', email: 'Fabio@Email.com', celular: '8199999999', ativo: true, favorito: false},
-      { nome: 'Maria da silva', email: 'maria@email.com', celular: '8199988889', ativo: true, favorito: true},
-      { nome: 'Fabio Francisco', email: 'Fabio@Email.com', celular: '8199999999', ativo: true, favorito: false},
-      { nome: 'Maria da silva', email: 'maria@email.com', celular: '8199988889', ativo: true, favorito: true},
-      { nome: 'Fabio Francisco', email: 'Fabio@Email.com', celular: '8199999999', ativo: true, favorito: false},
-      { nome: 'Maria da silva', email: 'maria@email.com', celular: '8199988889', ativo: true, favorito: true},
-      { nome: 'Fabio Francisco', email: 'Fabio@Email.com', celular: '8199999999', ativo: true, favorito: false},
-      { nome: 'Maria da silva', email: 'maria@email.com', celular: '8199988889', ativo: true, favorito: true},
-      { nome: 'Fabio Francisco', email: 'Fabio@Email.com', celular: '8199999999', ativo: true, favorito: false},
-      { nome: 'Maria da silva', email: 'maria@email.com', celular: '8199988889', ativo: true, favorito: true},
-      { nome: 'Fabio Francisco', email: 'Fabio@Email.com', celular: '8199999999', ativo: true, favorito: false},
-      { nome: 'Maria da silva', email: 'maria@email.com', celular: '8199988889', ativo: true, favorito: true},
-      { nome: 'Fabio Francisco', email: 'Fabio@Email.com', celular: '8199999999', ativo: true, favorito: false},
-      { nome: 'Maria da silva', email: 'maria@email.com', celular: '8199988889', ativo: true, favorito: true},
-      { nome: 'Fabio Francisco', email: 'Fabio@Email.com', celular: '8199999999', ativo: true, favorito: false},
-      { nome: 'Maria da silva', email: 'maria@email.com', celular: '8199988889', ativo: true, favorito: true},
-      { nome: 'Fabio Francisco', email: 'Fabio@Email.com', celular: '8199999999', ativo: true, favorito: false},
-      { nome: 'Maria da silva', email: 'maria@email.com', celular: '8199988889', ativo: true, favorito: true},
-      { nome: 'Fabio Francisco', email: 'Fabio@Email.com', celular: '8199999999', ativo: true, favorito: false},
-      { nome: 'Maria da silva', email: 'maria@email.com', celular: '8199988889', ativo: true, favorito: true},
+  constructor(
+    private router: Router,
+    private contactsService: ContactsService
+  ){
 
-    ]
+    
 
   }
 
   ngOnInit(): void {
+    this.subscription = this.contactsService.getAllContacts().subscribe({
+      next: (data) => {
+        this.contacts = data
+      }
+    })
+  }
+
+  onRowSelect(contact: Contact) {
+    console.log(contact)
+    this.contactsService.contactState.update(() => contact);
+    this.router.navigate([`/contato/${contact._id}`]);
     
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe()
   }
 }

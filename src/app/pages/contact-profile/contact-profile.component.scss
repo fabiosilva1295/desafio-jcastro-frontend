@@ -1,0 +1,20 @@
+:host {
+    .container-main {
+        background: var(--p-surface-0);
+    }
+
+    .back-button {
+        user-select: none;
+    }
+
+    .back-button i {
+        transition: 0.4s ease;
+    }
+
+    .back-button:hover i {
+        transform: translateX(-5px);
+    }
+
+    
+    
+}

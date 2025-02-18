@@ -1,0 +1,21 @@
+:host {
+    .image {
+        width: 300px;
+        height: 300px;
+    }
+
+    .card-container {
+        padding: 2rem;
+        border-radius: 20px;
+
+    }
+
+    input {
+        min-width: 300px;
+    }
+
+    span {
+        width: 100%;
+        min-width: 80px
+    }
+}

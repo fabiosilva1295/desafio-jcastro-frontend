@@ -1,0 +1,37 @@
+
+
+<div class="card-container drop-shadow-xs flex gap-9 justify-center items-center">
+  <div class="size-full gap-3 flex flex-col justify-center items-end image-container ">
+    <div class="image rounded-xl overflow-hidden">
+      <img [src]="avatarService.generateAvatar(contact.nome ||  '')" alt="">
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-4 justify-center items-start size-full details-info-container">
+    <div class="flex flex-col">
+      <span class="font-semibold  text-md text-cyan-900">Nome</span>
+      <span class="text-sm text-cyan-800">{{contact.nome}}</span>
+    </div>
+
+    <div class="flex flex-col">
+      <span class="font-semibold  text-md text-cyan-900">Email</span>
+      <span class="text-sm text-cyan-800">{{contact.email}}</span>
+    </div>
+
+    <div class="flex flex-col">
+      <span class="font-semibold  text-md text-cyan-900">Celular</span>
+      <span class="text-sm text-cyan-800">{{contact.celular}}</span>
+    </div>
+
+    <div class="flex flex-col">
+      <span class="font-semibold  text-md text-cyan-900">Telefone</span>
+      <span class="text-sm text-cyan-800">{{contact.telefone}}</span>
+    </div>
+
+    <div class="flex flex-col">
+      <span class="font-semibold  text-md text-cyan-900">Status</span>
+      <span class="text-sm text-cyan-800">{{contact.ativo ? 'Ativo' : 'Inativo'}}</span>
+    </div>
+
+  </div>
+</div>

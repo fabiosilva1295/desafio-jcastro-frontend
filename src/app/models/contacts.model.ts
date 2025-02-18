@@ -6,4 +6,6 @@ export interface Contact {
     telefone?: string;
     favorito?: boolean;
     ativo?: boolean;
+    last_updated?: Date;
+    createdAt?: Date;
 }

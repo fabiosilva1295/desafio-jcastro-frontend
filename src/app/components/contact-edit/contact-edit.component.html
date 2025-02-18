@@ -1,0 +1,79 @@
+<!-- 
+<div class="flex flex-col p-3 justify-between gap-9 items-end ">
+
+  @if(mode == 'create') {
+    <div class="grid grid-flow-row grid-cols-5 p-2">
+      <div class="col-span-4 flex items-center gap-2 justify-end">
+        <p-button severity="warn" [outlined]="true" [rounded]="true" icon="pi pi-star"></p-button>
+        <p-button (onClick)="onCreateContact()" severity="info" [rounded]="true" label="Salvar"></p-button>
+        
+      </div>
+    </div>
+  }
+  
+
+    <div [formGroup]="contactForm" class="grid gap-4 grid-cols-5">
+      <p-floatlabel>
+        <input formControlName="nome" pInputText id="in_name" type="text">
+        <label for="in_name">Nome</label>
+      </p-floatlabel>
+
+      <p-floatlabel>
+        <input formControlName="email" pInputText id="in_email" type="text">
+        <label for="in_email">Email</label>
+      </p-floatlabel>
+
+      <p-floatlabel>
+        <input formControlName="celular" pInputText id="in_celular" type="text">
+        <label for="in_celular">Celular</label>
+      </p-floatlabel>
+
+      <p-floatlabel>
+        <input formControlName="telefone" pInputText id="in_celular" type="text">
+        <label for="in_celular">Telefone</label>
+      </p-floatlabel>
+
+      
+      <p-togglebutton formControlName="ativo" onLabel="Ativo" offLabel="Inativo" styleClass="w-24" />
+
+    </div>
+</div>
+` -->
+
+<div class="card-container size-full drop-shadow-xs flex gap-9 justify-center items-center">
+  <div class="size-full gap-3 flex flex-col justify-center items-end image-container ">
+    <div class="image rounded-xl overflow-hidden">
+      <img [src]="avatarService.generateAvatar(contact?.nome || ' ')" alt="">
+    </div>
+  </div>
+
+  <div [formGroup]="contactForm" class="flex flex-col gap-4 justify-center items-start size-full details-info-container">
+    <div class="flex items-center gap-2">
+      <span class="font-regular  text-md text-cyan-900">Nome</span>
+      <input  placeholder="Nome do contato" formControlName="nome" pInputText type="text">
+    </div>
+
+    <div class="flex items-center gap-2">
+      <span class="font-regular  text-md text-cyan-900">Email</span>
+      <input  placeholder="Email do contato" formControlName="email" pInputText type="text">
+    </div>
+
+    <div class="flex items-center gap-2">
+      <span class="font-regular  text-md text-cyan-900">Celular</span>
+      <input  placeholder="Celular do contato" formControlName="celular" pInputText type="text">
+    </div>
+
+    <div class="flex items-center gap-2">
+      <span class="font-regular  text-md text-cyan-900">Telefone</span>
+      <input  placeholder="Telefone do contato" formControlName="telefone" pInputText type="text">
+    </div>
+
+    @if(mode == 'update') {
+      <div class="flex items-center gap-2">
+        <span class="font-regular  text-md text-cyan-900">Status</span>
+        <p-selectbutton [options]="stateOptions" formControlName="ativo" optionLabel="label" optionValue="value" aria-labelledby="basic" />
+      </div>
+    }
+
+  </div>
+</div>
